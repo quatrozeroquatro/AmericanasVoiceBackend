@@ -29,3 +29,5 @@ class WishlistService {
         return dbResponse;
     }
 }
+
+module.exports = new WishlistService();
