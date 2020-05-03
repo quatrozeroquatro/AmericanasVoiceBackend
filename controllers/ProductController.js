@@ -36,7 +36,7 @@ class ProductController {
         
         const product = req.body;
 
-        err, response = await WishlistService.addProduct(product);
+        response = await WishlistService.addProduct(product);
         if (err) {
             console.log(err);
             res.status(400).send(err);
@@ -47,7 +47,7 @@ class ProductController {
 
     async listWishlist(req, res) {
 
-        err, response = await WishlistService.listWishlist();
+        response = await WishlistService.listWishlist();
         if (err) {
             console.log(err);
             res.status(400).send(err);
