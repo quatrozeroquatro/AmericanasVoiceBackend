@@ -38,6 +38,7 @@ class ProductController {
 
         try {
             const response = await WishlistService.insertProduct(products[0]);
+            console.log(JSON.stringify(response))
             return res.json(response);
         } catch (error) {
             console.log(error)
