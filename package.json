@@ -1,0 +1,27 @@
+{
+  "name": "AmericanasVoiceBackend",
+  "version": "1.0.0",
+  "description": "backend for Americanas Voice project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yasminromi/AmericanasVoiceBackend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yasminromi/AmericanasVoiceBackend/issues"
+  },
+  "homepage": "https://github.com/yasminromi/AmericanasVoiceBackend#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "express": "^4.17.1",
+    "got": "^11.1.0",
+    "pg": "^8.0.3"
+  }
+}
