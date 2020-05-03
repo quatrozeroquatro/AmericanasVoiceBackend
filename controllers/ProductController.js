@@ -5,7 +5,8 @@ class ProductController {
         const { product } = req.params;
         const response = await ProductService.searchProductsV1Service(product);
 
-        const newResponse = await Promise.all(response.map(item => ProductService.searchProductsV1Service(item.id)))
+        const newResponse = await Promise.all(
+            response.map(item => ProductService.searchProductsV2Service(item.id)))
             .then(secondResponse => {
                 return secondResponse;
             });
