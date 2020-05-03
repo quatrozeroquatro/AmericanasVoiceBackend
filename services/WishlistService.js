@@ -16,6 +16,10 @@ class WishlistService {
     listWishlist() {
         return client.query(`SELECT * FROM wishlist WHERE user_id = $1`, [user.id]);
     }
+
+    clearWishlist() {
+        return client.query(`DELETE FROM wishlist`);
+    }
 }
 
 module.exports = new WishlistService();

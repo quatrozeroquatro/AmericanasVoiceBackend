@@ -8,4 +8,6 @@ routes.post('/add', ProductController.addProduct);
 
 routes.get('/list', ProductController.listWishlist);
 
+roustes.delete('/clear', ProductController.clearWishlist);
+
 module.exports = routes;

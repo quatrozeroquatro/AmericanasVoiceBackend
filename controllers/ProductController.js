@@ -38,7 +38,6 @@ class ProductController {
 
         try {
             const response = await WishlistService.insertProduct(products[0]);
-            console.log(JSON.stringify(response))
             return res.json(response);
         } catch (error) {
             console.log(error)
@@ -51,6 +50,17 @@ class ProductController {
         try {
             const response = await WishlistService.listWishlist();
             return res.json(response.rows);
+        } catch (error) {
+            console.log(error)
+            return res.status(400).json(error);
+        }
+    }
+
+    async clearWishlist(req, res) {
+
+        try {
+            const response = await WishlistService.clearWishlist();
+            return res.json(response);
         } catch (error) {
             console.log(error)
             return res.status(400).json(error);

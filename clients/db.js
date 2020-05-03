@@ -2,14 +2,13 @@ const pool = require('./pool');
 
 class Client {
 
-  query(quertText, params) {
+  query(queryText, params) {
     return new Promise((resolve, reject) => {
-      pool.query(quertText, params)
+      pool.query(queryText, params)
         .then((res) => {
           resolve(res);
         })
         .catch((err) => {
-          console.log(JSON.stringify(err))
           reject(err);
         });
     });
