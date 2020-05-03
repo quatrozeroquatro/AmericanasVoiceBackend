@@ -49,9 +49,9 @@ class ProductController {
 
         try {
             const response = await WishlistService.listWishlist();
-            return res.json(response);
+            return res.json(response.rows);
         } catch (error) {
-            //console.log(error)
+            console.log(error)
             return res.status(400).json(error);
         }
     }

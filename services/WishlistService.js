@@ -15,7 +15,7 @@ class WishlistService {
     }
 
     listWishlist() {
-        const response = client.query(`SELECT * FROM wishlist WHERE user_id = $1`, [user.id]);
+        return client.query(`SELECT * FROM wishlist WHERE user_id = $1`, [user.id]);
         console.log(JSON.stringify(response))
         const dbResponse = response.rows;
         return dbResponse;
