@@ -37,7 +37,6 @@ class ProductController {
         const product = req.body;
 
         try {
-            console.log(JSON.stringify(user));
             const response = await WishlistService.addProduct(product);
             return res.json(response);
         } catch (error) {
