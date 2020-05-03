@@ -17,15 +17,15 @@ class ProductController {
         // })
 
         const productsDetails = await ProductService.searchProductsV2Service(products[0].id);
-        const product = {
+        const response = {
             image: productsDetails.product.result.images[0].medium,
             name: productsDetails.product.result.name,
             price: productsDetails.offer.result.offers[0].salesPrice,
             store: productsDetails.offer.result.offers[0]._embedded.seller.name
         }
         
-        console.log(product);
-        return res.json(product);
+        console.log(response);
+        return res.json(response);
     }
 }
 
