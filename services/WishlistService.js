@@ -22,7 +22,7 @@ class WishlistService {
     }
 
     listWishlist() {
-        const response = client.query(`INSERT INTO wishlist(user_id, product_id, product_info)VALUES(${user.id}, ${product.id}, ${product})`);
+        const response = client.query(`SELECT * FROM wishlist WHERE user_id = ${user.id}`);
         const dbResponse = response.rows[0];
         if (!dbResponse) {
             error = 'Operation not completed';
