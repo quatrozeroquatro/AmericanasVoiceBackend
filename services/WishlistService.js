@@ -18,7 +18,7 @@ class WishlistService {
     }
 
     clearWishlist() {
-        return client.query(`DELETE FROM wishlist`);
+        return client.query(`DELETE FROM wishlist WHERE user_id = $1`, [user.id]);
     }
 }
 
