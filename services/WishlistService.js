@@ -12,21 +12,12 @@ class WishlistService {
     insertProduct(product) {
         console.log(JSON.stringify(product));
         const response = client.query(`INSERT INTO wishlist(user_id, product_id, product_info)VALUES($1, $2, $3)`, [user.id, product.id, product]);
-        const dbResponse = response.rows[0];
-        if (!dbResponse) {
-            error = 'Operation not completed';
-            throw new WishlistException(error);
-        }
-        return dbResponse;
+        return response;
     }
 
     listWishlist() {
         const response = client.query(`SELECT * FROM wishlist WHERE user_id = $1`, user.id);
         const dbResponse = response.rows[0];
-        if (!dbResponse) {
-            error = 'Operation not completed';
-            throw new WishlistException(error);
-        }
         return dbResponse;
     }
 }
