@@ -1,7 +1,7 @@
 import APIV1 from '../clients/americanas';
 import APIV2 from '../clients/americanas';
 
-export const SearchProductsV1Service = (productName) => {
+export const searchProductsV1Service = (productName) => {
     return APIV1.get('/search', {
         params:{
             content: productName,
@@ -14,7 +14,7 @@ export const SearchProductsV1Service = (productName) => {
     })
  }
 
- export const SearchProductsV2Service = (id) => {
+ export const searchProductsV2Service = (id) => {
     return APIV2.get('/2', {
         params:{
             id
@@ -23,4 +23,3 @@ export const SearchProductsV1Service = (productName) => {
         return data.products
     })
  }
-
