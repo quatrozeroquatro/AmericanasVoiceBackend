@@ -1,9 +1,10 @@
 const ProductService = require('../services/ProductService');
 
 class ProductController {
-    searchProduct(req, res)     {
+    async searchProduct(req, res)     {
         const { product } = req.params;
-        return res.json(ProductService.searchProductsV1Service(product));
+        const response = await ProductService.searchProductsV1Service(product);
+        return res.json(response);
     }
 }
 
