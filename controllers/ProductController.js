@@ -6,7 +6,7 @@ class ProductController {
         const products = await ProductService.searchProductsV1Service(product);
         const productsDetails = await Promise.all(products.map(item => ProductService.searchProductsV2Service(item.id)));
 
-        response = productsDetails.map(item => {
+        const response = productsDetails.map(item => {
             const product = {
                 image: item.product.result.images[0].medium,
                 name: item.product.result.name,
