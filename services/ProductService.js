@@ -20,7 +20,9 @@ class ProductService {
     searchProductsV2Service(id) {
         return axios.get(process.env.APIV2, {
             params:{
-                id: id
+                id: id,
+                c_opn: 'YZMEZP',
+                opn: 'YZMEZP'
             }
         }).then(response => {
             return response.data;
