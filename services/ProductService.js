@@ -3,7 +3,7 @@ const axios = require('axios');
 class ProductService {
     searchProductsV1Service(productName) {
 
-        axios.get(process.env.APIV1 + '/search', {
+        axios.get(process.env.APIV1, {
             params:{
                 content: productName,
                 sortBy: 'lowerPrice',
@@ -18,7 +18,7 @@ class ProductService {
     }
 
     searchProductsV2Service(id) {
-        axios.get(process.env.APIV2 + '/2', {
+        axios.get(process.env.APIV2, {
             params:{
                 id
             }
