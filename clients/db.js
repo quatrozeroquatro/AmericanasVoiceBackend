@@ -6,9 +6,11 @@ class Client {
     return new Promise((resolve, reject) => {
       pool.query(quertText, params)
         .then((res) => {
+          console.log(JSON.stringify(res))
           resolve(res);
         })
         .catch((err) => {
+          console.log(JSON.stringify(err))
           reject(err);
         });
     });
