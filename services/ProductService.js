@@ -6,7 +6,7 @@ class ProductService {
         return axios.get(process.env.APIV1, {
             params:{
                 content: productName,
-                sortBy: 'lowerPrice',
+                sortBy: 'relevant',
                 source: 'omega',
                 limit: 2
             },
