@@ -10,6 +10,7 @@ function WishlistException(message) {
 
 class WishlistService {
     insertProduct(product) {
+        console.log(JSON.stringify(product));
         const response = client.query(`INSERT INTO wishlist(user_id, product_id, product_info)VALUES(${user.id}, ${product.id}, ${product})`);
         const dbResponse = response.rows[0];
         if (!dbResponse) {
