@@ -1,8 +1,7 @@
-import APIV1 from '../clients/americanas';
-import APIV2 from '../clients/americanas';
+const AmericanasClient = require('../clients/AmericanasClient');
 
 export const searchProductsV1Service = (productName) => {
-    return APIV1.get('/search', {
+    return AmericanasClient.APIV1.get('/search', {
         params:{
             content: productName,
             sortBy: 'lowerPrice',
@@ -14,8 +13,8 @@ export const searchProductsV1Service = (productName) => {
     })
  }
 
- export const searchProductsV2Service = (id) => {
-    return APIV2.get('/2', {
+export const searchProductsV2Service = (id) => {
+    return AmericanasClient.APIV2.get('/2', {
         params:{
             id
         }
