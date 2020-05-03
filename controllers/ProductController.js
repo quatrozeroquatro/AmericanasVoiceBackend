@@ -44,6 +44,17 @@ class ProductController {
 
         return res.json(response);
     }
+
+    async listWishlist(req, res) {
+
+        err, response = await WishlistService.listWishlist();
+        if (err) {
+            console.log(err);
+            res.status(400).send(err);
+        }
+
+        return res.json(response);
+    }
 }
 
 module.exports = new ProductController();
