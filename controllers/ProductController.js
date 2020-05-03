@@ -4,6 +4,7 @@ class ProductController {
     async searchProduct(req, res)     {
         const { product } = req.params;
         const response = await ProductService.searchProductsV1Service(product);
+        console.log(response);
         return res.json(response);
     }
 }

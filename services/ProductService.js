@@ -11,7 +11,6 @@ class ProductService {
                 limit: 2
             }
         }).then(response => {
-            console.log(response.data.products);
             return response.data.products;
         }).catch(error => {
             console.log(error);
