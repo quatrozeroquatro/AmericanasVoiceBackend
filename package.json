@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/yasminromi/AmericanasVoiceBackend#readme",
   "dependencies": {
+    "axios": "^0.19.2",
     "express": "^4.17.1",
+    "got": "^11.1.0",
     "pg": "^8.0.3"
   }
 }
