@@ -3,7 +3,7 @@ const ProductService = require('../services/ProductService');
 class ProductController {
     async searchProduct(req, res)     {
         const { product } = req.params;
-        const products = await ProductService.searchProductsV1Service(product);
+        //const products = await ProductService.searchProductsV1Service(product);
         //const productsDetails = await Promise.all(products.map(item => ProductService.searchProductsV2Service(item.id)));
 
         // response = productsDetails.map(item => {
@@ -16,7 +16,7 @@ class ProductController {
         //     return product;
         // })
 
-        const productsDetails = await ProductService.searchProductsV2Service(products[0].id);
+        const productsDetails = await ProductService.searchProductsV2Service(63791503);
         const response = {
             image: productsDetails.product.result.images[0].medium,
             name: productsDetails.product.result.name,
