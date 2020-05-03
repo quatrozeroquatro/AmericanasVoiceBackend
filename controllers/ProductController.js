@@ -4,7 +4,7 @@ class ProductController {
     async searchProduct(req, res)     {
         const { product } = req.params;
         const products = await ProductService.searchProductsV1Service(product);
-        const productsDetails = products.map(item => await ProductService.searchProductsV2Service(item.id));
+        const productsDetails = products.map(item => await Promise.all(ProductService.searchProductsV2Service(item.id)));
         
         response = productsDetails.map(item => {
             const product = {
