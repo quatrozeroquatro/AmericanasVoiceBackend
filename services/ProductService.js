@@ -15,19 +15,19 @@ class ProductService {
         }).catch(error => {
             console.log(error);
         });
-    }
+    };
 
     searchProductsV2Service(id) {
         return axios.get(process.env.APIV2, {
             params:{
-                id
+                id: id
             }
         }).then(response => {
             return response.data;
         }).catch(error => {
             console.log(error);
         });
-    }
+    };
 }
 
 module.exports = new ProductService();
