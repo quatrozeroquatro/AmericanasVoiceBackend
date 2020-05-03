@@ -33,7 +33,7 @@ class ProductController {
     }
 
     async addProduct(req, res) {
-        console.log(JSON.stringify(req));
+        
         const product = req.body;
 
         err, response = await WishlistService.addProduct(product);
