@@ -36,24 +36,23 @@ class ProductController {
         
         const product = req.body;
 
-        response = await WishlistService.addProduct(product);
-        if (err) {
-            console.log(err);
-            res.status(400).send(err);
+        try {
+            console.log(JSON.stringify(user));
+            const response = await WishlistService.addProduct(product);
+            return res.json(response);
+        } catch (error) {
+            return res.status(400).json(error);
         }
-
-        return res.json(response);
     }
 
     async listWishlist(req, res) {
 
-        response = await WishlistService.listWishlist();
-        if (err) {
-            console.log(err);
-            res.status(400).send(err);
+        try {
+            const response = await WishlistService.listWishlist();
+            return res.json(response);
+        } catch (error) {
+            return res.status(400).json(error);
         }
-
-        return res.json(response);
     }
 }
 
