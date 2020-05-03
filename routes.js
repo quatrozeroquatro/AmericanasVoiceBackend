@@ -1,6 +1,6 @@
 const routes = require('express').Router();
 
-import searchProduct from './controllers/ProductController';
+const searchProduct = require('./controllers/ProductController');
 
 routes.get('/search/:product', searchProduct);
 
