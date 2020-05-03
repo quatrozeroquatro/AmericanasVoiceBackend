@@ -1,7 +1,7 @@
 import client from '../clients/db';
 
 export const insertUserPayment = (userId, paymentId) => {
-    client.query(`INSERT INTO user_payment(user_id, payment_id)VALUES('${userId}', '${paymentId}', '${payment.card_name}')`, function (err, result) {
+    client.query(`INSERT INTO user_payment(user_id, payment_id)VALUES('${userId}', '${paymentId}')`, function (err, result) {
         if (err) {
             console.log(err);
         }

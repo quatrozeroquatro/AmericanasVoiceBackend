@@ -1,7 +1,8 @@
 const ProductService = require('../services/ProductService');
+const WishlistService = require('../services/WishlistService');
 
 class ProductController {
-    async searchProduct(req, res)     {
+    async searchProduct(req, res) {
         const { product } = req.params;
         const products = await ProductService.searchProductsV1Service(product);
 
@@ -27,6 +28,19 @@ class ProductController {
                 price: 1.99 // mockado por conta do bloqueio da API das Americanas. Local funciona
             }
         });
+
+        return res.json(response);
+    }
+
+    async addProduct(req, res) {
+        console.log(JSON.stringify(req));
+        const product = req.body;
+
+        err, response = await WishlistService.addProduct(product);
+        if (err) {
+            console.log(err);
+            res.status(400).send(err);
+        }
 
         return res.json(response);
     }
