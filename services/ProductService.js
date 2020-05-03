@@ -7,7 +7,7 @@ class ProductService {
             params:{
                 content: productName,
                 sortBy: 'lowerPrice',
-                source: 'nanoo',
+                source: 'nanook',
                 limit: 2
             }
         }).then(response => {
