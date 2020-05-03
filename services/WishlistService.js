@@ -10,15 +10,11 @@ function WishlistException(message) {
 
 class WishlistService {
     insertProduct(product) {
-        const response = client.query(`INSERT INTO wishlist(user_id, product_id, product_info)VALUES($1, $2, $3)`, [user.id, product.id, product]);
-        return response;
+        return client.query(`INSERT INTO wishlist(user_id, product_id, product_info)VALUES($1, $2, $3)`, [user.id, product.id, product]);
     }
 
     listWishlist() {
         return client.query(`SELECT * FROM wishlist WHERE user_id = $1`, [user.id]);
-        console.log(JSON.stringify(response))
-        const dbResponse = response.rows;
-        return dbResponse;
     }
 }
 
