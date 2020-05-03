@@ -5,7 +5,7 @@ class ProductController {
         const { product } = req.params;
         const response = await ProductService.searchProductsV1Service(product)
             .then(items =>
-                items.map(item => ProductService.searchProductsV2Service(item.id).then(secondResponse => {
+                items.map(item => await ProductService.searchProductsV2Service(item.id).then(secondResponse => {
                     const product = {
                         image: secondResponse.data.product.result.images[0].medium,
                         name: secondResponse.data.product.result.name,
