@@ -34,10 +34,10 @@ class ProductController {
 
     async addProduct(req, res) {
         
-        const product = req.body;
+        const products = req.body;
 
         try {
-            const response = await WishlistService.insertProduct(product);
+            const response = await WishlistService.insertProduct(products[0]);
             return res.json(response);
         } catch (error) {
             console.log(error)
