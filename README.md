@@ -322,7 +322,60 @@ Comando de voz:
 A partir disso, a Função Twilio vai ao nosso backend e remove o produto especificado da lista.
 
 ~~~javascript
-TODO
+exports.handler = function(context, event, callback) {
+    
+    var axios = require('axios');
+    const deleteParameter = event.Field_product_Value;
+    
+    axios.delete('https://americanas-voice.herokuapp.com/removeItem/' + deleteParameter)
+    .then(function(response) {
+        
+        response = `${deleteParameter} removido da sua lista.`;
+    
+        let actions = [];  
+        let say = {
+            "say": response
+        }
+        
+        console.log(JSON.stringify(remember));
+        
+        let listen = {
+            "listen": {
+				"tasks": [
+				    "remove-product",
+					"buy",
+					"clear-wishlist",
+					"list-products",
+					"add_wishlist"
+				]
+			}
+		}
+        
+        actions.push(say);
+        actions.push(listen);
+        
+        let respObj = {
+        	"actions": actions
+        };
+      
+        callback(null, respObj);
+    
+    }).catch(function(error) {
+        console.log('erro ')
+        console.log(error)
+      let actions = [];  
+        let say = {
+            "say": "Não foi possível encontrar esse produto na sua lista"
+        }
+        actions.push(say);
+        let respObj = {
+        	"actions": actions
+        };
+      
+        callback(null, respObj);
+    });
+	
+};
 ~~~
 
 ## Limpar lista de produtos
@@ -504,3 +557,10 @@ serial | integer | integer
 id     | user_id | product_id | product_info | deleted_at 
 -------|---------|------------|--------------|-----------
 serial | integer | integer    | JSON         | TIMESTAMP  
+
+## Futuro
+
+Queremos implementar diversas outras funcionalidades a curto prazo:
+- Exibição de ofertas;
+- Recompras de produtos de forma mais inteligente (Exemplo: sempre compro pilhas, se peço para recomprar pilhas, ele já entende o tipo da pilha, pois já foi comprado outras vezes);
+- Exibir apenas o valor do carrinho
