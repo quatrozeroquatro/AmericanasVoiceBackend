@@ -22,7 +22,6 @@ class WishlistService {
     }
 
     removeItem(productName) {
-        console.log(productName);
         return client.query(`DELETE FROM wishlist WHERE user_id = $1 and product_info->>'name' LIKE $2`, [user.id, '%' + productName + '%']);
     }
 }
