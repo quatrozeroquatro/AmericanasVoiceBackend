@@ -1,9 +1,19 @@
-const { Client } = require('pg');
+const pool = require('./pool');
 
-var connectionString = process.env.DATABASE_URL;
+class Client {
 
-const client = new Client({
-    connectionString: connectionString
-});
+  query(queryText, params) {
+    return new Promise((resolve, reject) => {
+      pool.query(queryText, params)
+        .then((res) => {
+          console.log(JSON.stringify(res))
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
+}
 
-export default client;
+module.exports = new Client();
