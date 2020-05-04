@@ -66,6 +66,18 @@ class ProductController {
             return res.status(400).json(error);
         }
     }
+    async removeItem(req, res) {
+
+        const { name } = req.params;
+
+        try {
+            const response = await WishlistService.removeItem(name);
+            return res.json(response);
+        } catch (error) {
+            console.log(error)
+            return res.status(400).json(error);
+        }
+    }
 }
 
 module.exports = new ProductController();
