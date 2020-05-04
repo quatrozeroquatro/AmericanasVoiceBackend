@@ -21,8 +21,8 @@ class WishlistService {
         return client.query(`DELETE FROM wishlist WHERE user_id = $1`, [user.id]);
     }
 
-    removeItem(productName) {
-        return client.query(`DELETE FROM wishlist WHERE user_id = $1 and product_info->>'name' LIKE $2`, [user.id, '%' + productName + '%']);
+    removeItem(name) {
+        return client.query(`DELETE FROM wishlist WHERE user_id = $1 and product_info->>'name' LIKE $2`, [user.id, '%' + name + '%']);
     }
 }
 
