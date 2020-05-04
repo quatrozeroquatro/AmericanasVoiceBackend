@@ -10,4 +10,6 @@ routes.get('/list', ProductController.listWishlist);
 
 routes.delete('/clear', ProductController.clearWishlist);
 
+routes.delete('/removeItem', ProductController.removeItem);
+
 module.exports = routes;
