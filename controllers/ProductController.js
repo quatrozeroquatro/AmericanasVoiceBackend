@@ -66,6 +66,7 @@ class ProductController {
             return res.status(400).json(error);
         }
     }
+    
     async removeItem(req, res) {
 
         const { name } = req.params;

@@ -22,7 +22,7 @@ class WishlistService {
     }
 
     removeItem(productName) {
-        return client.query(`DELETE FROM wishlist WHERE user_id = $1 and product_info->>'name' = $2`, [user.id, productName]);
+        return client.query(`DELETE FROM wishlist WHERE user_id = $1 and product_info->>'name' LIKE $2`, [user.id, '%' + productName + '%']);
     }
 }
 
