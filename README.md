@@ -43,75 +43,75 @@ Por trás, através do Twilio, adiciono essa tarefa a uma função serverless pa
 
 ~~~javascript
 exports.handler = function(context, event, callback) {
-
+    
     var axios = require('axios');
     const searchParameter = event.Field_product_Value;
-
+    
     axios.get('https://americanas-voice.herokuapp.com/search/' + searchParameter)
-        .then(function(response) {
-
-            const products = response.data;
-
-            const price = products[0].price;
-            const productName = products[0].name;
-
-            response = `Encontrei ${productName} em torno de ${price}`;
-
-            let actions = [];
-            let say1 = {
-                "say": response
+    .then(function(response) {
+        
+        const products = response.data;
+        
+        const price = products[0].price;
+        const productName = products[0].name;
+        
+        response = `Encontrei ${productName} em torno de ${price}`;
+    
+        let actions = [];  
+        let say1 = {
+            "say": response
+        }
+        let say2 = {
+            "say": "Você tem preferência por alguma marca?"
+        }
+        
+        let remember = {
+            "remember" : {
+                "produto": {
+                    "product_name": searchParameter,
+                    "product_label": productName,
+                },
+                "result_list": products,
             }
-            let say2 = {
-                "say": "Você tem preferência por alguma marca?"
-            }
-
-            let remember = {
-                "remember": {
-                    "produto": {
-                        "product_name": searchParameter,
-                        "product_label": productName,
-                    },
-                    "result_list": products,
-                }
-            }
-
-            console.log(JSON.stringify(remember));
-
-            let listen = {
-                "listen": {
-                    "tasks": [
-                        "filter-for-brand",
-                        "dont-filter"
-                    ]
-                }
-            }
-
-            actions.push(say1);
-            actions.push(say2);
-            actions.push(remember);
-            actions.push(listen);
-
-            let respObj = {
-                "actions": actions
-            };
-
-            callback(null, respObj);
-
-        }).catch(function(error) {
-            console.log('erro ')
-            console.log(error)
-            let actions = [];
-            let say = {
-                "say": "Tivemos um pequeno problema. Tente novamente mais tarde."
-            }
-            actions.push(say);
-            let respObj = {
-                "actions": actions
-            };
-
-            callback(null, respObj);
-        });
-
+        }
+        
+        console.log(JSON.stringify(remember));
+        
+        let listen = {
+            "listen": {
+				"tasks": [
+				    "filter-for-brand",
+					"dont-filter"
+				]
+			}
+		}
+        
+        actions.push(say1);
+        actions.push(say2);
+        actions.push(remember);
+        actions.push(listen);
+        
+        let respObj = {
+        	"actions": actions
+        };
+      
+        callback(null, respObj);
+    
+    }).catch(function(error) {
+        console.log('erro ')
+        console.log(error)
+      let actions = [];  
+        let say = {
+            "say": "Tivemos um pequeno problema. Tente novamente mais tarde."
+        }
+        actions.push(say);
+        let respObj = {
+        	"actions": actions
+        };
+      
+        callback(null, respObj);
+    });
+	
 };
 ~~~
 
@@ -138,7 +138,7 @@ Há a opção de filtrar ou não filtrar através dos comandos:
 
 A partir daí, caso negativo, perguntamos se a pessoa deseja confirmar a adição dos produtos em sua lista. Segue abaixo a Função Twilio:
 
-```
+~~~javascript
 exports.handler = function(context, event, callback) {
     
     var axios = require('axios');
@@ -183,7 +183,7 @@ exports.handler = function(context, event, callback) {
     callback(null, respObj);
     
 };
-```
+~~~
 
 ## Confirmar adição do produto à lista
 
@@ -197,56 +197,7 @@ Depois de ter certeza do produto que deseja, o usuário pode confirmar ou não a
 - Pode
 - Não, obrigado
 
-Caso negativo, o produto é tirado da memória. Caso afirmativo, é ralizada uma chamada ao nosso backend para adicionar o produto em uma lista no banco de dados:
-
-~~~javascript
-exports.handler = function(context, event, callback) {
-
-    var axios = require('axios');
-
-    const memory = JSON.parse(event.Memory);
-
-    response = `Então posso adicionar ${memory.produto.product_label} na sua lista?`;
-
-    let actions = [];
-
-    let say = {
-        "say": response
-    }
-
-    let remember = {
-        "remember": {
-            "produto": {
-                "product_name": memory.produto.product_name,
-                "product_label": memory.produto.product_label,
-            },
-            "result_list": memory.produto.result_list,
-        }
-    }
-
-    let listen = {
-        "listen": {
-            "tasks": [
-                "add-product",
-                "cancel-add"
-            ]
-        }
-    }
-
-    actions.push(say);
-    actions.push(remember);
-    actions.push(listen);
-
-    let respObj = {
-        "actions": actions
-    };
-
-    callback(null, respObj);
-
-};
-~~~
-
-E então é adicionado o item à lista de compras:
+Caso negativo, o produto é tirado da memória. Caso afirmativo, é ralizada uma chamada ao nosso backend para adicionar o produto em uma lista no banco de dados e então é adicionado o item à lista de compras:
 
 ~~~javascript
 exports.handler = function(context, event, callback) {
@@ -278,7 +229,11 @@ exports.handler = function(context, event, callback) {
         let listen = {
             "listen": {
     			"tasks": [
-    				"list-products"
+    				"list-products",
+    				"remove-product",
+    				"clear-wishlist",
+    				"buy",
+    				"add_wishlist"
     			]
     		}
         }
@@ -389,53 +344,56 @@ Todos os dados são removidos, a partir da função abaixo:
 
 ~~~javascript
 exports.handler = function(context, event, callback) {
-
+    
     var axios = require('axios');
 
     const memory = JSON.parse(event.Memory);
-
+    
     axios.delete('https://americanas-voice.herokuapp.com/clear')
-        .then(function(response) {
-            response = `Lista esvaziada com sucesso`;
-
-            let actions = [];
-
-            let say = {
-                "say": response
-            }
-
-            let listen = {
-                "listen": {
-                    "tasks": [
-                        "add-product",
-                        "cancel-add"
-                    ]
-                }
-            }
-
-            actions.push(say);
-            actions.push(listen);
-
-            let respObj = {
-                "actions": actions
-            };
-
-            callback(null, respObj);
-        })
-        .catch(function(error) {
-            console.log(error);
-            let actions = [];
-            let say = {
-                "say": "Tivemos um pequeno problema. Tente novamente mais tarde."
-            }
-            actions.push(say);
-            let respObj = {
-                "actions": actions
-            };
-
-            callback(null, respObj);
-        });
-
+    .then(function(response) {
+        response = `Lista esvaziada com sucesso`;
+        
+        let actions = [];  
+    
+        let say = {
+            "say": response
+        }
+        
+        let listen = {
+            "listen": {
+    			"tasks": [
+    				"remove-product",
+    				"buy",
+    				"clear-wishlist",
+    				"list-products",
+    				"add-wishlist"
+    			]
+    		}
+        }
+        
+        actions.push(say);
+        actions.push(listen);
+        
+        let respObj = {
+        	"actions": actions
+        };
+      
+        callback(null, respObj);
+    })
+    .catch(function(error) {
+        console.log(error);
+        let actions = [];  
+        let say = {
+            "say": "Tivemos um pequeno problema. Tente novamente mais tarde."
+        }
+        actions.push(say);
+        let respObj = {
+        	"actions": actions
+        };
+        
+        callback(null, respObj);
+    });
+    
 };
 ~~~
 
@@ -449,65 +407,67 @@ O comando faz integração com o nosso backend, que por sua vez faz uma consulta
 
 ~~~javascript
 exports.handler = function(context, event, callback) {
-
+    
     var axios = require('axios');
-
+    
     const memory = JSON.parse(event.Memory);
-
+    
     axios.get('https://americanas-voice.herokuapp.com/list')
-        .then(async function(response) {
-
-            const products = response.data;
-            let actions = [];
-            var productsList = "";
-
-            const responseString = await products.forEach(product => productsList += product.product_info.name + ", ");
-
-            let say = {
-                "say": `${productsList}`
+    .then(async function(response) {
+        
+        const products = response.data;
+        let actions = []; 
+        var productsList = "";
+        
+        const responseString = await products.forEach(product => productsList += product.product_info.name + ", ");
+        
+        let say = {
+            "say": products.length === 0 ? `Não há nada em sua lista ainda` : `${productsList}`
+        }
+        
+        let remember = {
+            "remember" : {
+                "result_list": products,
             }
-
-            let remember = {
-                "remember": {
-                    "result_list": products,
-                }
-            }
-
-            let listen = {
-                "listen": {
-                    "tasks": [
-                        "add_wishlist",
-                        "clear-wishlist",
-                        "list-products"
-                    ]
-                }
-            }
-
-            actions.push(say);
-            actions.push(remember);
-            actions.push(listen);
-
-            let respObj = {
-                "actions": actions
-            };
-
-            callback(null, respObj);
-
-        }).catch(function(error) {
-            console.log('erro ')
-            console.log(error)
-            let actions = [];
-            let say = {
-                "say": "Tivemos um pequeno problema. Tente novamente mais tarde."
-            }
-            actions.push(say);
-            let respObj = {
-                "actions": actions
-            };
-
-            callback(null, respObj);
-        });
-
+        }
+        
+        let listen = {
+            "listen": {
+				"tasks": [
+					"add_wishlist",
+					"clear-wishlist",
+					"list-products",
+					"buy",
+					"remove-product"
+				]
+			}
+		}
+        
+        actions.push(say);
+        actions.push(remember);
+        actions.push(listen);
+        
+        let respObj = {
+        	"actions": actions
+        };
+      
+        callback(null, respObj);
+    
+    }).catch(function(error) {
+        console.log('erro ')
+        console.log(error)
+      let actions = [];  
+        let say = {
+            "say": "Tivemos um pequeno problema. Tente novamente mais tarde."
+        }
+        actions.push(say);
+        let respObj = {
+        	"actions": actions
+        };
+      
+        callback(null, respObj);
+    });
+	
 };
 ~~~
 
